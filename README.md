@@ -20,85 +20,48 @@ STEP-5: Read the characters row wise or column wise in the former order to get t
 
 # PROGRAM
 ```
+PROGRAM:
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
-void encryptRailFence(char text[], int depth, char cipher[]) {
-    int len = strlen(text);
-    char rail[depth][len];
-    memset(rail, '\n', sizeof(rail)); 
-    int row = 0, down = 1; // Direction flag
-
-    for (int i = 0; i < len; i++) {
-        rail[row][i] = text[i]; // Place character in rail matrix
-        if (row == 0)
-            down = 1;
-        else if (row == depth - 1)
-            down = 0;
-        row += (down ? 1 : -1);
-    }
-    int k = 0;
-    for (int i = 0; i < depth; i++)
-        for (int j = 0; j < len; j++)
-            if (rail[i][j] != '\n')
-                cipher[k++] = rail[i][j];
-
-    cipher[k] = '\0';
-}
-void decryptRailFence(char cipher[], int depth, char plain[]) {
-    int len = strlen(cipher);
-    char rail[depth][len];
-    memset(rail, '\n', sizeof(rail));
-
-    int row = 0, down = 1, index = 0;
-    for (int i = 0; i < len; i++) {
-        rail[row][i] = '*';
-
-        if (row == 0)
-            down = 1;
-        else if (row == depth - 1)
-            down = 0;
-
-        row += (down ? 1 : -1);
-    }
-    for (int i = 0; i < depth; i++)
-        for (int j = 0; j < len; j++)
-            if (rail[i][j] == '*')
-                rail[i][j] = cipher[index++];
-    row = 0, down = 1;
-    for (int i = 0; i < len; i++) {
-        plain[i] = rail[row][i];
-
-        if (row == 0)
-            down = 1;
-        else if (row == depth - 1)
-            down = 0;
-
-        row += (down ? 1 : -1);
-    }
-    plain[len] = '\0';
-}
-
 int main() {
-    char text[100], cipher[100], decrypted[100];
-    int depth;
-
-    printf("Enter the plaintext: ");
-    scanf("%s", text);
-    printf("Enter the depth: ");
-    scanf("%d", &depth);
-
-    encryptRailFence(text, depth, cipher);
-    printf("Encrypted Text: %s\n", cipher);
-
-    decryptRailFence(cipher, depth, decrypted);
-    printf("Decrypted Text: %s\n", decrypted);
-
+    int i, j, len, rails, count, dir;
+    char str[1000];
+    int code[100][1000] = {0};  // Initialize the entire array to 0
+    printf("Enter a Secret Message:\n");
+    scanf("%s",str);
+    len = strlen(str);
+    printf("Enter number of rails:\n");
+    scanf("%d", &rails);
+    count = 0;
+    i = 0;
+    dir = 1;  
+    for (j = 0; j < len; j++) {
+        code[i][j] = str[j];
+        // Change direction if we reach the top or bottom rail
+        if (i == 0) {
+            dir = 1;
+        } else if (i == rails - 1) {
+            dir = -1;
+        }
+        i += dir;
+    }
+    printf("Encrypted Message:\n");
+    // Print the encrypted message
+    for (i = 0; i < rails; i++) {
+        for (j = 0; j < len; j++) {
+            if (code[i][j] != 0) {
+                printf("%c", code[i][j]);
+            }
+        }
+    }
+    printf("\n");
     return 0;
 }
 ```
+
 # OUTPUT
-![image](https://github.com/user-attachments/assets/bddd8876-dcdc-419c-a2aa-2d7d1f2fcb32)
+![Screenshot 2025-03-27 090457](https://github.com/user-attachments/assets/a5b4bb0b-14ce-4c4d-9e9e-f141113d29ca)
+
 
 # RESULT
 The program is executed successfully.
