@@ -1,4 +1,6 @@
 # Ex--5-Rail-Fence-Program
+# Name:Akshaikhanna D
+# Reg no:212223040010
 
 # IMPLEMENTATION OF RAIL FENCE – ROW & COLUMN TRANSFORMATION TECHNIQUE
 
